@@ -54,8 +54,40 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 /*
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
+.matches( /^(Español|Spanish)/i,(session, args) => {
+    session.preferredLocale('es', function (err) {
+        if (!err) {
+            // Locale files loaded
+            session.send("switched_locale", "spanish");
+        } else {
+            // Problem loading the selected locale
+            session.error(err);
+        }
+    });
+})
+.matches( /^(English)/i,(session, args) => {
+    session.preferredLocale('en', function (err) {
+        if (!err) {
+            // Locale files loaded
+            session.send("switched_locale", "english");
+        } else {
+            // Problem loading the selected locale
+            session.error(err);
+        }
+    });
+})
 .onDefault((session) => {
-    session.send("greeting");  
+    if( !session.userData.almaProfile  ) {
+        session.userData.almaProfile = {
+            firstVisit: new Date()
+        };
+        session.save();
+        session.send("greeting");  
+    }
+    else{
+        session.send("welcome_back");
+    }
+
 });
 
 bot.dialog('/', intents);    

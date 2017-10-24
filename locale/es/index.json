@@ -1,4 +1,6 @@
 {
-    "greeting": "Hola, welcome to PBot",
-    "instructions": "Do'a Stuff'a"
+    "greeting": "Hola, welcome to Alma",
+    "welcome_back": "Welcome back amigo",
+    "instructions": "Do'a Stuff'a",
+    "switched_locale": "Your preferred language is now %s."
 }
