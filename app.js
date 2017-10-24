@@ -5,6 +5,7 @@ A simple echo bot for the Microsoft Bot Framework.
 var restify = require('restify');
 var builder = require('botbuilder');
 var azure = require('botbuilder-azure'); 
+var intake = require('./intake');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -87,8 +88,13 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     else{
         session.send("welcome_back");
     }
+    if( !session.userData.almaProfile.currentPregnancy ){
+          session.beginDialog("/intake");
+    }
 
 });
 
 bot.dialog('/', intents);    
+bot.dialog('/intake', intake);
+
 
