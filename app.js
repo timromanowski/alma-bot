@@ -4,6 +4,7 @@ A simple echo bot for the Microsoft Bot Framework.
 
 var restify = require('restify');
 var builder = require('botbuilder');
+var azure = require('botbuilder-azure'); 
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -27,13 +28,18 @@ server.post('/api/messages', connector.listen());
 * We provide adapters for Azure Table, CosmosDb, SQL Azure, or you can implement your own!
 * For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
 * ---------------------------------------------------------------------------------------- */
+var tableName = "Alma"; // You define
+var storageName = "almabot"; // Obtain from Azure Portal
+var storageKey = process.env.MicrosoftAzureTableKey; // FKbA2dXNWbWGjcgPtUuFFQYBGgKocVs+yRd2Ll3Ya86a4PKFEj7gWopTMq0Tz6FLE2lvXraXSyhSO9xLRyT3yQ== "Azure-Table-Key"; // Obtain from Azure Portal
+var azureTableClient = new azure.AzureTableClient(tableName, storageName, storageKey);
+var tableStorage = new azure.AzureBotStorage({gzipData: false}, azureTableClient);
 
 // Create your bot with a function to receive messages from the user
 const bot = new builder.UniversalBot(connector, {
     localizerSettings: { 
         defaultLocale: "en" 
     }
-});
+}).set('storage', tableStorage);;
 
 // Make sure you add code to validate these fields
 var luisAppId = process.env.LuisAppId;
