@@ -6,6 +6,8 @@
     "are_you_pregnant": "are you pregnant?",
     "did_not_understand":"I’m sorry, I didn’t understand that response. My programmers help me get smarter every day.",
     "what_is_your_due_date": "When are you due?",
+    "yes_no_pna": ["Si", "No", "Prefiero no responder"],
+    "help_menu": ["Contáctenos", "Editar detalles de embarazo"],
     "congratulations":"Ok. Congratulations! Every woman’s pregnancy journey is different, but every woman should feel supported during their journey. That’s my job. I ask you questions to see how you are doing and feeling weekly throughout the term, and I provide info about the common issues women face during their pregnancy. Here’s a question: would you like to “subscribe” to my free service? There is no cost, no obligation, and you can unsubscribe at any time you like",
     "wont_say_if_pregnant":"Ok. I’m a robot, so that doesn’t make me sad. If you’d like to explore my content on your own, please visit my website: www.alma-bot.com. I won’t bother you again after this unless you message me first to re-initiate contact. So long",
     "not_pregnant": "Alright. Not pregnant. My service is for pregnant women, but I invite you to learn more about me and about pregnancy issues. You can try my 3-minute Demo Dialog to get a brief sample of the user experience of Alma-Bot. You can also learn more about me and pregnancy issues generally from my website: www.alma-bot.com."
