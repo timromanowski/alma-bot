@@ -8,9 +8,9 @@ module.exports = [
     },
     (session, results) => {
         // Update preferred locale
-        session.send(results.response.entity);
         switch (results.response.index) {
             case 0:
+                session.send("congratulations");
                 builder.Prompts.time(session, "what_is_your_due_date");
                 break;
             case 1:            
