@@ -5,6 +5,10 @@ A simple echo bot for the Microsoft Bot Framework.
 var restify = require('restify');
 var builder = require('botbuilder');
 var azure = require('botbuilder-azure'); 
+var intake = require('./intake');
+var help = require('./help');
+var locale = require( './localePicker');
+var welcome = require( './welcome');
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -54,9 +58,62 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
 /*
 .matches('<yourIntent>')... See details at http://docs.botframework.com/builder/node/guides/understanding-natural-language/
 */
+.matches( /^(Español|Spanish)/i,(session, args) => {
+    session.preferredLocale('es', function (err) {
+        if (!err) {
+            // Locale files loaded
+            session.send("switched_locale", "spanish");
+        } else {
+            // Problem loading the selected locale
+            session.error(err);
+        }
+    });
+})
+.matches( /^(clear_all)/i, (session, args) => {
+    session.userData.almaProfile = null;
+    session.save();
+})
+.matches( /^edit/i, (session, args) => {
+    session.beginDialog("/intake");
+})
+.matches( /^help/i, (session, args) => {
+    session.beginDialog("/help");
+})
+.matches( /^language/i, (session, args) => {
+    session.beginDialog("/localePicker");
+})
+.matches( /^(English)/i,(session, args) => {
+    session.preferredLocale('en', function (err) {
+        if (!err) {
+            // Locale files loaded
+            session.send("switched_locale", "english");
+        } else {
+            // Problem loading the selected locale
+            session.error(err);
+        }
+    });
+})
 .onDefault((session) => {
-    session.send("greeting");  
+    session.send("did_not_understand");      
 });
 
+bot.on('conversationUpdate', function (activity) {
+    if (activity.membersAdded) {
+        activity.membersAdded.forEach((identity) => {
+            if (identity.id === activity.address.bot.id) {
+                var reply = new builder.Message()
+                    .address(activity.address)
+                    .text('Hi there!');
+                //bot.send(reply);
+                bot.beginDialog(activity.address, "/welcome");
+            }
+        });
+    }
+});
 bot.dialog('/', intents);    
+bot.dialog('/intake', intake).cancelAction('cancelList', "intake_canceled", { matches: /\bcancel\b/i });;
+bot.dialog('/help', help);
+bot.dialog('/localePicker', locale);
+bot.dialog( '/welcome', welcome );
+
 
