@@ -111,7 +111,7 @@ bot.on('conversationUpdate', function (activity) {
     }
 });
 bot.dialog('/', intents);    
-bot.dialog('/intake', intake).cancelAction('cancelList', "intake_canceled", { matches: /\bcancel\b/i });;
+bot.dialog('/intake', intake).cancelAction('cancelList', "intake_canceled", { matches: /\quit\b/i });;
 bot.dialog('/help', help);
 bot.dialog('/localePicker', locale);
 bot.dialog( '/welcome', welcome );
