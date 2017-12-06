@@ -94,7 +94,7 @@ var intents = new builder.IntentDialog({ recognizers: [recognizer] })
     });
 })
 .onDefault((session) => {
-    session.send("did_not_understand");      
+    session.beginDialog("/welcome");
 });
 
 bot.on('conversationUpdate', function (activity) {
@@ -111,8 +111,8 @@ bot.on('conversationUpdate', function (activity) {
     }
 });
 bot.dialog('/', intents);    
-bot.dialog('/intake', intake).cancelAction('cancelList', "intake_canceled", { matches: /\quit\b/i });;
-bot.dialog('/help', help);
+bot.dialog('/intake', intake).cancelAction('cancelList', "intake_canceled", { matches: /\quit\b/i });
+bot.dialog('/help', help).triggerAction(  /^help/i );
 bot.dialog('/localePicker', locale);
 bot.dialog( '/welcome', welcome );
 

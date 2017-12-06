@@ -10,12 +10,13 @@ module.exports = [
             session.send("greeting");  
         }
         else{
-            session.userData.almaProfile = null;
             session.save();
             session.send("welcome_back");
         }
         if( !session.userData.almaProfile || !session.userData.almaProfile.currentPregnancy ){
               session.beginDialog("/intake");
+        }else{
+            session.endDialog();
         }
     }
 ]
