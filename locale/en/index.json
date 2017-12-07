@@ -10,7 +10,7 @@
     "did_not_understand":"I’m sorry, I didn’t understand that response. My programmers help me get smarter every day.",
     "switched_locale": "Your preferred language is now %s.",
     "are_you_pregnant": "Here’s the big question … at this moment, are you a pregnant woman?",
-    "what_is_your_due_date": "First, what is your DUE DATE? If you aren’t sure, don’t worry ... that’s not unusual!. Just give your best guess. (MM/DD/YYYY)",
+    "what_is_your_due_date": "When are you DUE? If you aren’t sure, don’t worry ... that’s not unusual!. Just give your best guess. (MM/DD/YYYY)",
     "congratulations":"Congratulations! Every woman’s pregnancy journey is unique. I ask questions based on how far along you are, and respond with pregnancy info and advice you might find helpful. Would you like to sign up for this service? It’s free and you can cancel at any time.",
     "sign_up": "Would you like to sign up for this service? It’s free and you can cancel at any time.",
     "signup_yes": "Fabulous! Just a few questions and then we’ll get started.",
@@ -23,11 +23,13 @@
     "how_old_are_you": "How old are you today?",
     "what_zip_code":"What is the ZIP Code of your primary residence?",
     "education_level":"What is the highest level of education you have completed?",
-    "education_level_options": "High school diploma or GED|Associate’s Degree|Four-Year Degree|Graduate School|Prefer not to answer",
+    "education_level_options": "Did not graduate|High school diploma or GED|Associate’s Degree|Four-Year Degree|Graduate School|Prefer not to answer",
     "feeling_statement":"Now, I want to ask about how you are feeling right now. These questions are valuable to help me better understand you, and to help you better understand yourself. There’s no wrong answer.",
     "anxiety_question":"On a scale of 1 to 5, how would you rate your ANXIETY about your pregnancy today?",
     "confidence_question":"On a scale of 1 to 5, how would you rate your CONFIDENCE today in your ability to manage the challenges of pregnancy?",
     "intake_over":"Alright. That’s it for today! After this, I’ll message you with new topics to discuss periodically. Also, you can say “menu” any time and learn about my features and capabilities. Til next time!",
-    "learn_more":"To learn more about me, go to http://www.alma-bot.com. There you will find information about my purpose, history, development team, sponsors and a library of helpful information about managing pregnancy."  
+    "learn_more":"To learn more about me, go to http://www.alma-bot.com. There you will find information about my purpose, history, development team, sponsors and a library of helpful information about managing pregnancy.",
+    "due_date_in_past":"I’m sorry, that’s not a valid date it seems to be in the past",
+    "due_date_too_far_away":"I’m sorry, you said your due date is more than 290 days away. If you are a human, you can’t have that due date"
     
 }

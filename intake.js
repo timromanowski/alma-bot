@@ -2,8 +2,10 @@ const builder = require('botbuilder');
 module.exports = [
     (session, args, next) => {
         // Prompt the user to select their preferred locale
-        if( session.userData.almaProfile.currentPregnancy.complete ) {
-            session.send( "intake_edit");
+        if( session.userData.almaProfile.currentPregnancy.complete ) {            
+            if( !args || !args.skip ){
+                session.send( "intake_edit");
+            }
             next();
         }
         else {
@@ -49,12 +51,26 @@ module.exports = [
             }
         }
     },
-    (session, results) => {
+    (session, results, next) => {
         if (results.response) {
+            var one_day=1000*60*60*24;
             session.dialogData.time = builder.EntityRecognizer.resolveTime([results.response]);
-            session.userData.almaProfile.currentPregnancy["due_date"] = session.dialogData.time;
-            session.save();
-            builder.Prompts.number(session, "how_old_are_you");
+            var today = new Date().getTime();
+            var difference_ms = session.dialogData.time - today;       
+            // Convert back to days and return
+            var days = Math.round(difference_ms/one_day);
+            if( days < 0 ){
+                session.send("due_date_in_past");
+                session.replaceDialog('/intake', { skip: true });
+            } else if( days > 290 ){
+                session.send("due_date_too_far_away");
+                session.replaceDialog('/intake', { skip: true });
+            }
+            else {
+                session.userData.almaProfile.currentPregnancy["due_date"] = session.dialogData.time;
+                session.save();
+                builder.Prompts.number(session, "how_old_are_you");
+            }
         }        
     },
     (session, results) => {
