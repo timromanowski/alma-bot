@@ -16,6 +16,13 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
   
+var documentDbOptions = {
+    host: 'https://localhost:8081', // Host for local DocDb emulator
+    masterKey: 'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==', // Fixed key for local DocDb emulator
+    database: 'almabotdocdb',
+    collection: 'almabotdata'
+};
+
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
     appId: process.env.MicrosoftAppId,
@@ -35,15 +42,15 @@ server.post('/api/messages', connector.listen());
 var tableName = "Alma"; // You define
 var storageName = "almabot"; // Obtain from Azure Portal
 var storageKey = process.env.MicrosoftAzureTableKey; // Obtain from Azure Portal
-var azureTableClient = new azure.AzureTableClient(tableName, storageName, storageKey);
-var tableStorage = new azure.AzureBotStorage({gzipData: false}, azureTableClient);
+var docDbClient = new azure.DocumentDbClient(documentDbOptions);
+var tableStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
 
 // Create your bot with a function to receive messages from the user
 const bot = new builder.UniversalBot(connector, {
     localizerSettings: { 
         defaultLocale: "en" 
     }
-});//.set('storage', tableStorage);;
+}).set('storage', tableStorage);
 
 // Make sure you add code to validate these fields
 var luisAppId = process.env.LuisAppId;
