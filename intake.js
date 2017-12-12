@@ -1,6 +1,7 @@
 const builder = require('botbuilder');
 const store = require('./store')
 var mongoose = require('mongoose');
+const util = require('./helpers/utils');
 
 module.exports = [
     (session, args, next) => {
@@ -26,7 +27,7 @@ module.exports = [
             //session.userData.almaProfile.save();
 
             store.findUser(session).then((user) => {
-                user.name = results.response;
+                user.name = util.capitalizeFirstLetter(results.response);
                 user.save();
                 var options = session.localizer.gettext(session.preferredLocale(), "yes_no_pnf");        
                 builder.Prompts.choice(session, "are_you_pregnant", options);

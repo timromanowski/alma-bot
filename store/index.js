@@ -15,13 +15,12 @@ module.exports = {
             var q = Pregnancy.find({'_user': userId}).sort({"time":1}).limit(1);
             q.exec((err, pregnancy) => {
                 if (err !== null || pregnancy === null || pregnancy.length <= 0 ) {
-                    User.findOne({ 'user_address.user.id': session.message.address.user.id }, (err, user) => {
-                        var pregnancy = {
-                            _user: userId,
-                        }; 
-                        Pregnancy.create(pregnancy);
-                        resolve(pregnancy[0])
-                    });
+                    var pregnancy = {
+                       _user: userId,
+                    }; 
+                    Pregnancy.create(pregnancy);
+                    resolve(pregnancy[0])
+                    
                 } else {
                     resolve(pregnancy[0])
                 }
