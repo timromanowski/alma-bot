@@ -1,0 +1,24 @@
+version: '2'
+services:    
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    env_file:
+      - '.env'
+    volumes:
+      - mongovolume:/data/db
+    ports:
+      - 27017:27017   
+  bot:
+    build: .
+    container_name: "alma"
+    env_file:
+      - '.env'
+    links:
+      - mongodb
+    depends_on:
+     - mongodb
+    ports:
+      - '3978:3978'    
+volumes:
+  mongovolume:

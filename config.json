@@ -1,0 +1,7 @@
+{
+  "MONGO_URI": "mongodb://localhost:27017/alma",
+  "GOOGLE_MAPS_API_KEY": "AIzaSyBIMDYCvmzwhmzVaM1Peuoj_9JRS2dRQsI",
+  "WIT_ACCESS_TOKEN": "59b067e2-a68f-470b-9f1b-c532f447c086",
+  "MICROSOFT_APP_ID": "",
+  "MICROSOFT_APP_PASSWORD": ""
+}

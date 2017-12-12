@@ -1,21 +1,32 @@
 {
-  "name": "luisbot",
+  "name": "alma-bot",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Alma Pregnancy Bot",
+  "repository": "git@github.com:timromanowski/alma-bot.git",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "start": "node app.js",
+    "build:watch": "babel src --out-dir lib --source-maps --watch",
+    "build": "babel src --out-dir lib --source-maps"
+  },
+  "author": "Tim Romanowski",
+  "license": "ISC",
   "dependencies": {
-    "botbuilder": "^3.8.4",
-    "botbuilder-azure": "^3.0.4",
-    "dtrace-provider": "^0.8.5",   
-    "restify": "^5.0.0"
+    "@google/maps": "^0.4.3",
+    "bluebird": "^3.5.0",
+    "botbuilder": "^3.9.1",
+    "botbuilder-wit": "^2.0.8",
+    "chance": "^1.0.11",
+    "dotenv-extended": "^2.0.1",
+    "moment-timezone": "^0.5.13",
+    "mongoose": "^4.11.9",
+    "restify": "^5.2.0",
+    "string-format": "^0.5.0"
   },
   "devDependencies": {
-    "request": "^2.81.0",
-    "zip-folder": "^1.0.0"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "eslint": "^4.5.0"
+  }
 }

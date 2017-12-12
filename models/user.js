@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+const Pregnancy = require('../models/pregnancy'); 
 
 const userSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
     user_address: {
         id: String,
         channelId: String,
@@ -10,11 +10,14 @@ const userSchema = new mongoose.Schema({
         bot: { id: String, name: String },
         serviceUrl: String
     },
-    name: { type: String, index: true },
+    name: { type: String },
     preferred_locale: String,
+    zip_code: String,
+    education_level: String,
     age: Number,
     has_heath_ins: Boolean,
     health_ins_provider: String,
+    accecepted_terms: Date,
     pregnancies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pregnancy' }]
 }, { timestamps: true });
 

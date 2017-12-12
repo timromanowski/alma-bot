@@ -1,0 +1,56 @@
+docker-machine create --driver=digitalocean --digitalocean-access-token=6435a64c2009f13bbd7f08d95017b039407eea3bf626285651d3ef7d33c87954 --digitalocean-size=1gb blog
+eval $(docker-machine env alma)
+eval $(docker-machine env -u)
+docker-compose -f docker-compose.prod.yml up -d db
+docker-compose -f docker-compose.prod.yml run --rm app rake db:create db:migrate
+
+docker-compose run --rm app rake db:create db:migrate
+
+cker-compose -f docker-compose.prod.yml up -d db
+
+# local DB 
+docker-compose -run --rm app rake db:create db:migrate
+
+<<<<<<< Local Changes
+docker-compose run --rm app rake db:create db:migrate
+
+=======
+docker-compose run --rm app rake db:reset db:migrate
+>>>>>>> External Changes
+
+docker-compose run --rm app bundle install rails generate paper_trail:install rake db:migrate
+
+# Stop all
+docker stop $(docker ps -a -q)
+# Delete all containers
+docker rm $(docker ps -a -q)
+# Delete all images
+docker rmi -f $(docker images -q)
+#remove all volumes
+docker volume rm $(docker volume ls -f dangling=true -q)
+
+docker exec -it kidc_app_1 bash
+
+ task  Check if path exists
+
+        task  Check if template exists
+
+        task  Create 'base' project
+        path  kidc
+
+        task  Prepare and run everything
+        open  carefully read and edit the `.env` file
+        move  cd kidc
+         run  docker-compose up --build
+
+        task  Initialize the database in a 2nd Docker-enabled terminal
+        note  OSX / Windows users can skip the --user flag
+         run  docker-compose exec --user "$(id -u):$(id -g)" app rails db:reset
+         run  docker-compose exec --user "$(id -u):$(id -g)" app rails db:migrate
+
+        task  Visit the page in your browser
+       visit  Running Docker natively? http://localhost:3000
+       visit  Running Docker with the Toolbox? http://192.168.99.100:3000
+
+gem install html2haml
+find . -name \*.erb -print | sed 'p;s/.erb$/.haml/' | xargs -n2 html2haml

@@ -10,6 +10,14 @@ exports.getRandomReminder = () => {
     return getRandom('reminder');
 };
 
+String.prototype.format = function() {
+    a = this;
+    for (k in arguments) {
+      a = a.replace("{" + k + "}", arguments[k])
+    }
+    return a
+  }
+
 /**
  * Returns a random example of a greeting message
  * @returns {String}

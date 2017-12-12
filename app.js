@@ -5,10 +5,26 @@ A simple echo bot for the Microsoft Bot Framework.
 var restify = require('restify');
 var builder = require('botbuilder');
 var azure = require('botbuilder-azure'); 
+const mongoose = require('mongoose');
 var intake = require('./intake');
 var help = require('./help');
 var locale = require( './localePicker');
 var welcome = require( './welcome');
+const config = require('./config');
+
+//=========================================================
+// MongoDB Setup
+//=========================================================
+
+mongoose.connect(process.env.MONGO_URI || config.MONGO_URI, err => {
+     if (err) {
+         return console.error(err);
+     }
+     console.log("Connected to MongoDB");
+}, {
+    useMongoClient: true,
+    /* other options */
+  });
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -16,48 +32,28 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
   
-var documentDbOptions = {
-    host: 'https://localhost:8081', // Host for local DocDb emulator
-    masterKey: 'C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==', // Fixed key for local DocDb emulator
-    database: 'almabotdocdb',
-    collection: 'almabotdata'
-};
-
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
-    appId: process.env.MicrosoftAppId,
-    appPassword: process.env.MicrosoftAppPassword,
-    stateEndpoint: process.env.BotStateEndpoint,
-    openIdMetadata: process.env.BotOpenIdMetadata 
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
 // Listen for messages from users 
 server.post('/api/messages', connector.listen());
-
-/*----------------------------------------------------------------------------------------
-* Bot Storage: This is a great spot to register the private state storage for your bot. 
-* We provide adapters for Azure Table, CosmosDb, SQL Azure, or you can implement your own!
-* For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
-* ---------------------------------------------------------------------------------------- */
-var tableName = "Alma"; // You define
-var storageName = "almabot"; // Obtain from Azure Portal
-var storageKey = process.env.MicrosoftAzureTableKey; // Obtain from Azure Portal
-var docDbClient = new azure.DocumentDbClient(documentDbOptions);
-var tableStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
 
 // Create your bot with a function to receive messages from the user
 const bot = new builder.UniversalBot(connector, {
     localizerSettings: { 
         defaultLocale: "en" 
     }
-}).set('storage', tableStorage);
+});
 
 // Make sure you add code to validate these fields
-var luisAppId = process.env.LuisAppId;
-var luisAPIKey = process.env.LuisAPIKey;
-var luisAPIHostName = process.env.LuisAPIHostName || 'westus.api.cognitive.microsoft.com';
+var luisAppId = process.env.LUIS_APP_ID;
+var luisAPIKey = process.env.LUIS_KEY;
+var luisAPIHostName = process.env.LUIS_HOST || 'westus.api.cognitive.microsoft.com';
 
-const LuisModelUrl = 'https://' + luisAPIHostName + '/luis/v1/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
+const LuisModelUrl = 'https://' + luisAPIHostName + '/entitylinking/v1.0/application?id=' + luisAppId + '&subscription-key=' + luisAPIKey;
 
 // Main dialog with LUIS
 var recognizer = new builder.LuisRecognizer(LuisModelUrl);
