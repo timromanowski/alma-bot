@@ -6,7 +6,8 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var azure = require('botbuilder-azure'); 
 const mongoose = require('mongoose');
-var intake = require('./intake');
+var intake = require('./pregnancy_intake');
+var profile = require('./profile');
 var help = require('./help');
 var locale = require( './localePicker');
 var welcome = require( './welcome');
@@ -115,6 +116,7 @@ bot.on('conversationUpdate', function (activity) {
 });
 bot.dialog('/', intents);    
 bot.dialog('/intake', intake).cancelAction('cancelList', "intake_canceled", { matches: /\quit\b/i });
+bot.dialog('/profile', profile).cancelAction('cancelList', "intake_canceled", { matches: /\quit\b/i });
 bot.dialog('/help', help).triggerAction(  /^help/i );
 bot.dialog('/localePicker', locale);
 bot.dialog( '/welcome', welcome );

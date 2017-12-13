@@ -18,7 +18,14 @@ const userSchema = new mongoose.Schema({
     has_heath_ins: Boolean,
     health_ins_provider: String,
     accecepted_terms: Date,
+    current_due_date: Date,
+    profile_complete: Boolean,
     pregnancies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pregnancy' }]
 }, { timestamps: true });
+
+userSchema.methods.daysLeft = function () {
+    var date
+    return this.model('Animal').find({ type: this.type }, cb);
+}
 
 module.exports = mongoose.model('User', userSchema);

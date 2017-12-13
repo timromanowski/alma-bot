@@ -1,9 +1,10 @@
 const builder = require('botbuilder');
 const consts = require('../helpers/consts');
-const Reminder = require('../models/reminder');
+const store = require('../store')
+const Reminder = require('../models/user');
 
 /**
- * Returns a function that queries MongoDB for expired reminders, sends notifications and cleans up the database.
+ * Returns a function that queries MongoDB for content to be sent to uses, sends notifications and cleans up the database.
  * @param bot {UniversalBot}
  * @returns {Function}
  */

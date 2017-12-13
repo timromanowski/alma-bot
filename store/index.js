@@ -47,10 +47,7 @@ module.exports = {
             else {        
               user.last_session_date = new Date()
               user.save(); 
-            }            
-            session.userData = {
-                u: user._id
-            }
+            }                        
             resolve(user)
           });
        });
